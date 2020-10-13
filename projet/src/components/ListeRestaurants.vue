@@ -14,24 +14,24 @@
     <h1>Nombre de restaurants : {{restaurants.length*page}}/{{total}}</h1>
 
     <div class="slidecontainer">
-      <input type="range" min="5" max="100" value="10" class="slider" id="resAfficher"  v-on:keyup="updateAffichage" v-on:click="updateAffichage">
+      <v-slider max="100" step="5" min="0" value="10" class="slider" id="resAfficher"  v-on:keyup="updateAffichage" v-on:click="updateAffichage"> </v-slider>
       <p><span id="valRes">10</span></p>
     </div>
 
 
     <div>
-      <button v-on:click="pagePrecedente" v-bind:disabled="page==1">Precedent</button>
-      <button v-on:click="pageSuivante" v-bind:disabled="restaurants.length*page == total">Suivant</button>
+      <v-btn color="primary" elevation="3" v-on:click="pagePrecedente" v-bind:disabled="page==1">Precedent</v-btn>
+      <v-btn eleveation="3" v-on:click="pageSuivante" v-bind:disabled="restaurants.length*page == total">Suivant</v-btn>
     </div>
 
     <div>
-      <input type="text" id="recherche" value="" v-on:input="chercherRestaurant">
+      <v-text-field type="text" id="recherche" value="" v-on:input="chercherRestaurant"> </v-text-field>
       <button v-on:click="chercherRestaurant">Rechercher</button>
     </div>
 
-    <table>
+    <v-simple-table>
       <tr>
-        <th>Nom</th>
+        <th>Nom Coucou thomas</th>
         <th>Cuisine </th>
         <th>Supprimer </th>
         <th>Modifier </th>
@@ -42,14 +42,14 @@
         <td>{{r.name}}</td>
         <td> {{r.cuisine}}</td>
         <td style="text-align: center">
-          <img class="delete" src="../assets/croix.png" alt="Supprimer restaurant" width="20" height="20" v-on:click="supprimerRestaurant(r._id)">
+          <v-btn-fab elevation="2" fab><v-icon alt="Supprimer restaurant"  v-on:click="supprimerRestaurant(r._id)"> mdi-delete</v-icon></v-btn-fab>
         </td>
         <td style="text-align: center">
-          <img class="delete" id="modifImg" src="../assets/refresh.png" alt="Modifier restaurant" width="15" height="15" v-on:click="updRestaurant(r)">
+          <v-icon class="delete" id="modifImg" alt="Modifier restaurant" v-on:click="updRestaurant(r)"> mdi-update</v-icon>
         </td>
       </tr>
       </tbody>
-    </table>
+    </v-simple-table>
 
 
     <form v-on:submit="changerRestaurant" id="formModif" class="modif">
@@ -159,7 +159,7 @@ export default {
       return (index % 2) ? 'lightBlue' : 'pink';
     },
     getRestaurantsFromServer(){
-      fetch(' http://10.154.123.224:8080/api/restaurants')
+      fetch(' http://localhost:8080/api/restaurants')
           .then((responseJSON) => {
             return responseJSON.json();
           }).then((responseJS) => {
