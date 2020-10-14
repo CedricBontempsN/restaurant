@@ -76,6 +76,7 @@
         <th>Quartier</th>
         <th>Supprimer</th>
         <th>Modifier</th>
+        <th>Détails</th>
       </tr>
       <tbody>
         <tr
@@ -107,6 +108,7 @@
               mdi-update</v-icon
             >
           </td>
+          <td><v-icon>mdi-help</v-icon></td>
         </tr>
       </tbody>
     </v-simple-table>
