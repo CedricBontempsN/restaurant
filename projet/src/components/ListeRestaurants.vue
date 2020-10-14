@@ -18,7 +18,7 @@
       </form>
     </v-container>
 
-    <h1>Nombre de restaurants : {{ restaurants.length * page }}/{{ total }}</h1>
+    <h1 style="text-align: center">Nombre de restaurants : {{ restaurants.length * page }}/{{ total }}</h1>
     <v-container>
       <v-row>
         <v-col>
@@ -82,12 +82,10 @@
         <tr
           v-for="(r, index) in restaurants"
           :key="index"
-          v-bind:style="{ backgroundColor: getColor(index) }"
-          v-bind:class="{ bordureRouge: index === 2 }"
         >
-          <td>{{ r.name }}</td>
-          <td>{{ r.cuisine }}</td>
-          <td>{{ r.borough }}</td>
+          <td style="text-align: center">{{ r.name }}</td>
+          <td style="text-align: center">{{ r.cuisine }}</td>
+          <td style="text-align: center">{{ r.borough }}</td>
           <td style="text-align: center">
             <v-btn-fab elevation="2" fab
               ><v-icon
@@ -108,7 +106,7 @@
               mdi-update</v-icon
             >
           </td>
-          <td><v-icon>mdi-help</v-icon></td>
+          <td style="text-align: center"><v-btn><v-icon>mdi-help</v-icon></v-btn></td>
         </tr>
       </tbody>
     </v-simple-table>
