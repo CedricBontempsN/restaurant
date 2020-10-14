@@ -4,18 +4,17 @@
       <form v-on:submit="ajouterRestaurant">
         <v-row>
           <v-col>
-            <label>
-              Nom :
-              <v-text-field type="text" required v-model="nom"> </v-text-field
-            ></label>
+            <v-text-field type="text" placeholder="Nom" required v-model="nom">
+            </v-text-field>
           </v-col>
           <v-col>
-            <label>
-              Cuisine : <v-text-field type="text" required v-model="cuisine"> </v-text-field>
-            </label>
+              <v-text-field type="text" placeholder="Cuisine" required v-model="cuisine">
+              </v-text-field>
+          </v-col>
+          <v-col>
+            <v-btn>Ajouter <v-icon> mdi-check-circle</v-icon></v-btn>
           </v-col>
         </v-row>
-        <v-btn> <v-icon>mdi-thumb-up</v-icon></v-btn>
       </form>
     </v-container>
 
@@ -56,7 +55,6 @@
           </div>
         </v-col>
         <v-col>
-          <div>
             <v-text-field
               type="text"
               id="recherche"
@@ -64,8 +62,9 @@
               v-on:input="chercherRestaurant"
             >
             </v-text-field>
-            <button v-on:click="chercherRestaurant">Rechercher</button>
-          </div>
+        </v-col>
+        <v-col>
+           <v-btn v-on:click="chercherRestaurant">Rechercher <v-icon> mdi-check-circle</v-icon></v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -111,14 +110,25 @@
         </tr>
       </tbody>
     </v-simple-table>
-
-    <form v-on:submit="changerRestaurant" id="formModif" class="modif">
-      <label> Nom : <input type="text" required v-model="oldName" /> </label>
-      <label>
-        Cuisine : <input type="text" required v-model="oldCuisine" />
-      </label>
-      <button>Modifier</button>
-    </form>
+    <div>
+      <v-container>
+        <form v-on:submit="changerRestaurant" id="formModif" class="modif">
+          <v-row>
+            <v-col>
+                <v-text-field type="text" placeholder="Nom" required v-model="oldName">
+                </v-text-field>
+            </v-col>
+            <v-col>
+                <v-text-field type="text" placeholder="Cuisine" required v-model="oldCuisine">
+                </v-text-field>
+            </v-col>
+            <v-col>
+              <v-btn>Modifier<v-icon> mdi-check-circle </v-icon></v-btn>
+            </v-col>
+          </v-row>
+        </form>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -145,7 +155,7 @@ export default {
       elemRecherche: "",
       oldName: "",
       oldCuisine: "",
-      borough: ""
+      borough: "",
     };
   },
   mounted() {
