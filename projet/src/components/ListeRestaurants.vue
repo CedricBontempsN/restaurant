@@ -8,17 +8,24 @@
             </v-text-field>
           </v-col>
           <v-col>
-              <v-text-field type="text" placeholder="Cuisine" required v-model="cuisine">
-              </v-text-field>
+            <v-text-field
+              type="text"
+              placeholder="Cuisine"
+              required
+              v-model="cuisine"
+            >
+            </v-text-field>
           </v-col>
           <v-col>
-            <v-btn>Ajouter <v-icon> mdi-check-circle</v-icon></v-btn>
+            <v-btn type="submit">Ajouter <v-icon> fa-plus</v-icon></v-btn>
           </v-col>
         </v-row>
       </form>
     </v-container>
 
-    <h1 style="text-align: center">Nombre de restaurants : {{ restaurants.length * page }}/{{ total }}</h1>
+    <h1 style="text-align: center" font-family="serif">
+      Nombre de restaurants : {{ restaurants.length * page }}/{{ total }}
+    </h1>
     <v-container>
       <v-row>
         <v-col>
@@ -55,16 +62,18 @@
           </div>
         </v-col>
         <v-col>
-            <v-text-field
-              type="text"
-              id="recherche"
-              value=""
-              v-on:input="chercherRestaurant"
-            >
-            </v-text-field>
+          <v-text-field
+            type="text"
+            id="recherche"
+            value=""
+            v-on:input="chercherRestaurant"
+          >
+          </v-text-field>
         </v-col>
         <v-col>
-           <v-btn v-on:click="chercherRestaurant">Rechercher <v-icon> mdi-check-circle</v-icon></v-btn>
+          <v-btn v-on:click="chercherRestaurant"
+            >Rechercher &nbsp; &nbsp;<v-icon> fa-search</v-icon></v-btn
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -79,10 +88,7 @@
         <th>Détails</th>
       </tr>
       <tbody>
-        <tr
-          v-for="(r, index) in restaurants"
-          :key="index"
-        >
+        <tr v-for="(r, index) in restaurants" :key="index">
           <td style="text-align: center">{{ r.name }}</td>
           <td style="text-align: center">{{ r.cuisine }}</td>
           <td style="text-align: center">{{ r.borough }}</td>
@@ -92,7 +98,7 @@
                 alt="Supprimer restaurant"
                 v-on:click="supprimerRestaurant(r._id)"
               >
-                mdi-delete</v-icon
+                fa-trash-alt</v-icon
               ></v-btn-fab
             >
           </td>
@@ -103,10 +109,12 @@
               alt="Modifier restaurant"
               v-on:click="updRestaurant(r)"
             >
-              mdi-update</v-icon
+              fa-redo</v-icon
             >
           </td>
-          <td style="text-align: center"><v-btn><v-icon>mdi-help</v-icon></v-btn></td>
+          <td style="text-align: center">
+            <v-btn><v-icon>fa-info-circle</v-icon></v-btn>
+          </td>
         </tr>
       </tbody>
     </v-simple-table>
@@ -115,12 +123,22 @@
         <form v-on:submit="changerRestaurant" id="formModif" class="modif">
           <v-row>
             <v-col>
-                <v-text-field type="text" placeholder="Nom" required v-model="oldName">
-                </v-text-field>
+              <v-text-field
+                type="text"
+                placeholder="Nom"
+                required
+                v-model="oldName"
+              >
+              </v-text-field>
             </v-col>
             <v-col>
-                <v-text-field type="text" placeholder="Cuisine" required v-model="oldCuisine">
-                </v-text-field>
+              <v-text-field
+                type="text"
+                placeholder="Cuisine"
+                required
+                v-model="oldCuisine"
+              >
+              </v-text-field>
             </v-col>
             <v-col>
               <v-btn>Modifier<v-icon> mdi-check-circle </v-icon></v-btn>
