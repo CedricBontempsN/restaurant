@@ -115,7 +115,7 @@
           <td style="text-align: center">
             <template>
               <div class="text-center">
-                <v-btn color="primary" dark @click="dialog = true">
+                <v-btn color="grey" dark @click="dialog = true">
                   <v-icon>
                     fa-info
                   </v-icon>
@@ -128,7 +128,7 @@
       <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-card-title class="headline grey lighten-2">
-            Detail du resaturant
+            Details du resaturant
           </v-card-title>
 
           <v-card-text>
@@ -140,7 +140,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="dialog = false">
-              Retour au tableau
+              <v-icon>fa-undo</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
