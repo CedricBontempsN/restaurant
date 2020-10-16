@@ -113,10 +113,38 @@
             >
           </td>
           <td style="text-align: center">
-            <v-btn><v-icon>fa-info-circle</v-icon></v-btn>
+            <template>
+              <div class="text-center">
+                <v-btn color="primary" dark @click="dialog = true">
+                  <v-icon>
+                    fa-info
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
           </td>
         </tr>
       </tbody>
+      <v-dialog v-model="dialog" width="500">
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Detail du resaturant
+          </v-card-title>
+
+          <v-card-text>
+            Go inserer la map avec le resto centré
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">
+              Retour au tableau
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-simple-table>
     <div>
       <v-container>
@@ -174,6 +202,7 @@ export default {
       oldName: "",
       oldCuisine: "",
       borough: "",
+      dialog: false,
     };
   },
   mounted() {
