@@ -78,7 +78,7 @@
       </v-row>
     </v-container>
 
-    <v-simple-table>
+    <v-table text-align="center">
       <tr>
         <th>Restaurants</th>
         <th>Cuisine</th>
@@ -145,7 +145,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-simple-table>
+    </v-table>
     <div>
       <v-container>
         <form v-on:submit="changerRestaurant" id="formModif" class="modif">
@@ -168,7 +168,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col> 
               <v-btn>Modifier<v-icon> mdi-check-circle </v-icon></v-btn>
             </v-col>
           </v-row>
@@ -179,6 +179,7 @@
 </template>
 
 <script>
+/// CHERCHE V-DATA Pour les info de la popup --> Info a mettre de le header, avant restaurant(data dans js)
 export default {
   name: "ListeRestaurants",
   data: function () {
