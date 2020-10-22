@@ -17,7 +17,7 @@
             </v-text-field>
           </v-col>
           <v-col>
-            <v-btn type="submit">Ajouter <v-icon> fa-plus</v-icon></v-btn>
+            <v-btn type="submit" >Ajouter <v-icon style="margin-left:5px"> fa-plus</v-icon></v-btn>
           </v-col>
         </v-row>
       </form>
@@ -72,7 +72,7 @@
         </v-col>
         <v-col>
           <v-btn v-on:click="chercherRestaurant"
-            >Rechercher &nbsp; &nbsp;<v-icon> fa-search</v-icon></v-btn
+            >Rechercher<v-icon style="margin-left:5px"> fa-search</v-icon></v-btn
           >
         </v-col>
       </v-row>
@@ -95,15 +95,17 @@
           <td style="text-align: center">
             <v-btn-fab elevation="2" fab
               ><v-icon
+                style="margin-left:5px"
                 alt="Supprimer restaurant"
                 v-on:click="supprimerRestaurant(r._id)"
               >
-                fa-trash-alt</v-icon
+              fas fa-trash</v-icon
               ></v-btn-fab
             >
           </td>
           <td style="text-align: center">
             <v-icon
+              style="margin-left:5px"
               class="delete"
               id="modifImg"
               alt="Modifier restaurant"
@@ -116,7 +118,7 @@
             <template>
               <div class="text-center">
                 <v-btn color="grey" dark @click="dialog = true">
-                  <v-icon>
+                  <v-icon style="margin-left:5px">
                     fa-info
                   </v-icon>
                 </v-btn>
@@ -140,7 +142,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="dialog = false">
-              <v-icon>fa-undo</v-icon>
+              <v-icon style="margin-left:5px">fa-undo</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -169,7 +171,7 @@
               </v-text-field>
             </v-col>
             <v-col> 
-              <v-btn>Modifier<v-icon> mdi-check-circle </v-icon></v-btn>
+              <v-btn>Modifier<v-icon style="margin-left:5px"> fab fa-jedi-order </v-icon></v-btn>
             </v-col>
           </v-row>
         </form>
