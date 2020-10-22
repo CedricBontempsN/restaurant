@@ -17,7 +17,9 @@
             </v-text-field>
           </v-col>
           <v-col>
-            <v-btn type="submit" >Ajouter <v-icon style="margin-left:5px"> fa-plus</v-icon></v-btn>
+            <v-btn type="submit"
+              >Ajouter <v-icon style="margin-left: 5px"> fa-plus</v-icon></v-btn
+            >
           </v-col>
         </v-row>
       </form>
@@ -26,10 +28,12 @@
     <h1 style="text-align: center" font-family="serif">
       Nombre de restaurants : {{ restaurants.length * page }}/{{ total }}
     </h1>
+    <!--
     <v-container>
       <v-row>
         <v-col>
-          <div class="slidecontainer">
+          
+            <div class="slidecontainer">
             <v-slider
               max="100"
               step="5"
@@ -41,8 +45,10 @@
               v-on:click="updateAffichage"
             >
             </v-slider>
+            
             <p><span id="valRes">10</span></p>
           </div>
+         
         </v-col>
         <v-col>
           <div>
@@ -72,13 +78,64 @@
         </v-col>
         <v-col>
           <v-btn v-on:click="chercherRestaurant"
-            >Rechercher<v-icon style="margin-left:5px"> fa-search</v-icon></v-btn
+            >Rechercher<v-icon style="margin-left: 5px">
+              fa-search</v-icon
+            ></v-btn
           >
         </v-col>
       </v-row>
     </v-container>
+    -->
+    <template>
+      <v-card>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table :headers="headers" :items="restaurants" :search="search">
+          <template center v-slot:[`item.Modifier`]="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+          </template>
+          <template
+            style="text-align: center"
+            v-slot:[`item.supprimer`]="{ item }"
+          >
+            <v-icon small @click="deleteItem(item)"> fa-trash </v-icon>
+          </template>
+          <template
+            style="text-align: center"
+            v-slot:[`item.Details`]
+          >
+            <v-icon small @click="dialog = true"> fa-info </v-icon>
+          </template>
+        </v-data-table>
+      </v-card>
+      <v-dialog v-model="dialog" width="500">
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Details du resaturant
+          </v-card-title>
 
-    <v-table text-align="center">
+          <v-card-text> Go inserer la map avec le resto centré </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">
+              <v-icon style="margin-left: 5px">fa-undo</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </template>
+
+    <!-- table de base
+      <v-table text-align="center" >
       <tr>
         <th>Restaurants</th>
         <th>Cuisine</th>
@@ -127,27 +184,10 @@
           </td>
         </tr>
       </tbody>
-      <v-dialog v-model="dialog" width="500">
-        <v-card>
-          <v-card-title class="headline grey lighten-2">
-            Details du resaturant
-          </v-card-title>
+      -->
 
-          <v-card-text>
-            Go inserer la map avec le resto centré
-          </v-card-text>
+    <!-- </v-table> -->
 
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">
-              <v-icon style="margin-left:5px">fa-undo</v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-table>
     <div>
       <v-container>
         <form v-on:submit="changerRestaurant" id="formModif" class="modif">
@@ -170,8 +210,12 @@
               >
               </v-text-field>
             </v-col>
-            <v-col> 
-              <v-btn>Modifier<v-icon style="margin-left:5px"> fab fa-jedi-order </v-icon></v-btn>
+            <v-col>
+              <v-btn
+                >Modifier<v-icon style="margin-left: 5px">
+                  fab fa-jedi-order
+                </v-icon></v-btn
+              >
             </v-col>
           </v-row>
         </form>
@@ -186,6 +230,20 @@ export default {
   name: "ListeRestaurants",
   data: function () {
     return {
+      search: "",
+      headers: [
+        {
+          text: "Restaurant",
+          align: "start",
+          sortable: false,
+          value: "name",
+        },
+        { text: "Cuisine", value: "cuisine" },
+        { text: "Quartier", value: "borough" },
+        { text: "Supprimer", align: "center", value: "supprimer" },
+        { text: "Modifier", align: "center", value: "Modifier" },
+        { text: "Details", align: "center", value: "Details" },
+      ],
       restaurants: [
         {
           nom: "café de Paris",
@@ -206,6 +264,9 @@ export default {
       oldCuisine: "",
       borough: "",
       dialog: false,
+      supprimer: document.write(
+        '<td style="text-align: center"> <v-icon style="margin-left:5px" class="delete" id="modifImg" alt="Modifier restaurant"  v-on:click="updRestaurant(r)"> fa-redo</v-icon></td>" '
+      ),
     };
   },
   mounted() {
