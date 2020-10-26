@@ -99,7 +99,7 @@
         </v-card-title>
         <v-data-table :headers="headers" :items="restaurants" :search="search">
           <template center v-slot:[`item.Modifier`]="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">
+            <v-icon small class="mr-2" @click="updRestaurant(item._id)">
               mdi-pencil
             </v-icon>
           </template>
@@ -107,7 +107,7 @@
             style="text-align: center"
             v-slot:[`item.supprimer`]="{ item }"
           >
-            <v-icon small @click="deleteItem(item)"> fa-trash </v-icon>
+            <v-icon small @click="supprimerRestaurant(item._id)"> fa-trash </v-icon>
           </template>
           <template
             style="text-align: center"
@@ -258,15 +258,13 @@ export default {
       cuisine: "",
       total: "",
       page: 1,
-      pageSize: 10,
+      pageSize: "",
       elemRecherche: "",
       oldName: "",
       oldCuisine: "",
       borough: "",
       dialog: false,
-      supprimer: document.write(
-        '<td style="text-align: center"> <v-icon style="margin-left:5px" class="delete" id="modifImg" alt="Modifier restaurant"  v-on:click="updRestaurant(r)"> fa-redo</v-icon></td>" '
-      ),
+      supprimer: ""
     };
   },
   mounted() {
