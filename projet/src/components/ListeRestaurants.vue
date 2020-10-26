@@ -28,7 +28,7 @@
     <h1 style="text-align: center" font-family="serif">
       Nombre de restaurants : {{ restaurants.length * page }}/{{ total }}
     </h1>
-    <!--
+    
     <v-container>
       <v-row>
         <v-col>
@@ -85,7 +85,8 @@
         </v-col>
       </v-row>
     </v-container>
-    -->
+  
+    <!-- 
     <template>
       <v-card>
         <v-card-title>
@@ -133,8 +134,8 @@
         </v-card>
       </v-dialog>
     </template>
-
-    <!-- table de base
+-->
+    <!-- table de base -->
       <v-table text-align="center" >
       <tr>
         <th>Restaurants</th>
@@ -184,9 +185,8 @@
           </td>
         </tr>
       </tbody>
-      -->
 
-    <!-- </v-table> -->
+     </v-table>
 
     <div>
       <v-container>
