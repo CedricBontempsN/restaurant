@@ -221,6 +221,21 @@
         </form>
       </v-container>
     </div>
+      <v-dialog v-model="dialog" width="500">
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Details du resaturant
+          </v-card-title>
+
+          <v-card-text> Go inserer la map avec le resto centré </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">
+              <v-icon style="margin-left: 5px">fa-undo</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
