@@ -1,4 +1,5 @@
 <template>
+
   <div class="resto">
     <v-container>
       <form v-on:submit="ajouterRestaurant">
@@ -147,10 +148,10 @@
       </tr>
       <tbody>
         <tr v-for="(r, index) in restaurants" :key="index">
-          <td style="text-align: center">{{ r.name }}</td>
-          <td style="text-align: center">{{ r.cuisine }}</td>
-          <td style="text-align: center">{{ r.borough }}</td>
-          <td style="text-align: center">
+          <td style="text-align: center; width:25%">{{ r.name }}</td>
+          <td style="text-align: center; width:25%">{{ r.cuisine }}</td>
+          <td style="text-align: center; width:25%">{{ r.borough }}</td>
+          <td style="text-align: center; width: 5%">
             <v-btn-fab elevation="2" fab
               ><v-icon
                 style="margin-left:5px"
@@ -161,7 +162,7 @@
               ></v-btn-fab
             >
           </td>
-          <td style="text-align: center">
+          <td style="text-align: center; width:5%">
             <v-icon
               style="margin-left:5px"
               class="delete"
@@ -172,7 +173,7 @@
               fa-redo</v-icon
             >
           </td>
-          <td style="text-align: center">
+          <td style="text-align: center; width:5%">
             <template>
               <div class="text-center">
                 <v-btn color="grey" dark @click="dialog = true">
@@ -223,7 +224,7 @@
     </div>
       <v-dialog v-model="dialog" width="500">
         <v-card>
-          <v-card-title class="headline grey lighten-2">
+          <v-card-title  class="headline grey lighten-2">
             Details du resaturant
           </v-card-title>
 
