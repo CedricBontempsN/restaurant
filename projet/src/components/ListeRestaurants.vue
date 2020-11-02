@@ -86,7 +86,7 @@
         </v-col>
       </v-row>
     </v-container>
-  
+
     <!-- 
     <template>
       <v-card>
@@ -137,6 +137,7 @@
     </template>
 -->
     <!-- table de base -->
+
       <v-table text-align="center" >
       <tr>
         <th>Restaurants</th>
@@ -148,8 +149,8 @@
       </tr>
       <tbody>
         <tr v-for="(r, index) in restaurants" :key="index">
-          <td style="text-align: center; width:25%">{{ r.name }}</td>
-          <td style="text-align: center; width:25%">{{ r.cuisine }}</td>
+          <td style="text-align: center; width:30%">{{ r.name }}</td>
+          <td style="text-align: center; width:30%">{{ r.cuisine }}</td>
           <td style="text-align: center; width:25%">{{ r.borough }}</td>
           <td style="text-align: center; width: 5%">
             <v-btn-fab elevation="2" fab
@@ -168,7 +169,7 @@
               class="delete"
               id="modifImg"
               alt="Modifier restaurant"
-              v-on:click="updRestaurant(r)"
+              v-on:click="updRestaurant(index)"
             >
               fa-redo</v-icon
             >
@@ -176,7 +177,7 @@
           <td style="text-align: center; width:5%">
             <template>
               <div class="text-center">
-                <v-btn color="grey" dark @click="dialog = true">
+                <v-btn color="grey" dark  v-on:click="showMap(r)" @click="dialog = true">
                   <v-icon style="margin-left:5px">
                     fa-info
                   </v-icon>
@@ -222,27 +223,52 @@
         </form>
       </v-container>
     </div>
-      <v-dialog v-model="dialog" width="500">
+      <v-dialog v-model="dialog" width="70%">
         <v-card>
           <v-card-title  class="headline grey lighten-2">
             Details du resaturant
           </v-card-title>
-
-          <v-card-text> Go inserer la map avec le resto centré </v-card-text>
+          <v-row>
+            <v-col>
+          <div id="restauMap">
+          </div>
+          <v-card-text>
+            <div id="infoRestau"/>
+          </v-card-text>
+            </v-col>
+            <v-col>
+          <div>
+            <v-date-picker  v-model="date" mode="dateTime" :minute-increment="5" />
+          </div>
+          </v-col>
+            <v-col>
+              <div>
+                <v-time-picker  v-model="picker" elevation="15"></v-time-picker>
+              </div>
+            </v-col>
+          </v-row>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">
+            <v-btn color="primary" text @click="dialog = false">Réserver
+              <v-icon style="margin-left: 5px">fa-check</v-icon>
+            </v-btn>
+            <v-btn color="primary" text @click="dialog = false">Fermer
               <v-icon style="margin-left: 5px">fa-undo</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+    <v-treeview :items="reservations"></v-treeview>
   </div>
 </template>
 
 <script>
 /// CHERCHE V-DATA Pour les info de la popup --> Info a mettre de le header, avant restaurant(data dans js)
+//import { gmapsMap, gmapsMarker } from 'x5-gmaps'
+
 export default {
+  //components: { gmapsMap, gmapsMarker },
   name: "ListeRestaurants",
   data: function () {
     return {
@@ -264,11 +290,26 @@ export default {
         {
           nom: "café de Paris",
           cuisine: "Française",
+          address: "",
+          grades: ""
         },
         {
           nom: "Sun City Café",
           cuisine: "Américaine",
+          address: "",
+          grades: ""
         },
+      ],
+      reservations: [
+        {
+          id: 1,
+          name: 'Mes réservations :',
+          children: [
+            { id: 2, name: 'Calendar : app' },
+            { id: 3, name: 'Chrome : app' },
+            { id: 4, name: 'Webstorm : app' },
+          ],
+        }
       ],
       nom: "",
       cuisine: "",
@@ -280,13 +321,17 @@ export default {
       oldCuisine: "",
       borough: "",
       dialog: false,
-      supprimer: ""
+      supprimer: "",
+      date: "",
+      timezone: '',
+
     };
   },
   mounted() {
     console.log("Before HTML");
     this.getRestaurantsFromServer();
     this.getRestaurantsNb();
+    this.showMap(null);
   },
   methods: {
     supprimerRestaurant(id) {
@@ -378,6 +423,7 @@ export default {
           return responseJSON.json();
         })
         .then((responseJS) => {
+          console.log(responseJS.data[0].address.coord[0]);
           this.restaurants = responseJS.data;
         })
         .catch(function (err) {
@@ -475,6 +521,15 @@ export default {
         .catch(function (err) {
           console.log(err);
         });
+    },
+    showMap(restaurant){
+      var coordX= restaurant.address.coord[0];
+      var coordY= restaurant.address.coord[1];
+      console.log(document.getElementById("restauMap"));
+      document.getElementById("restauMap").innerHTML=
+          "<iframe width=\"100%\" height=\"600\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q="+coordY+ "," + coordX+ "+(mapResatu)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed\"></iframe>\n"
+      document.getElementById("infoRestau").innerHTML=
+          "Adresse complète : \n"+ restaurant.address.street +", "+ restaurant.address.zipcode+", " + restaurant.borough;
     },
   },
 };
