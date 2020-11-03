@@ -249,7 +249,7 @@
           </v-row>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">Réserver
+            <v-btn v-bind:disabled="picker === '' || date === ''" color="primary" text @click="reserver()" >Réserver
               <v-icon style="margin-left: 5px">fa-check</v-icon>
             </v-btn>
             <v-btn color="primary" text @click="dialog = false">Fermer
@@ -259,16 +259,32 @@
         </v-card>
       </v-dialog>
 
-    <v-treeview :items="reservations"></v-treeview>
+
+    <div id="resa">
+      <v-table text-align="center" >
+        <tr>
+          <th>Restaurants</th>
+          <th>Date</th>
+          <th>Heure</th>
+        </tr>
+        <tbody>
+        <tr v-for="(r, index) in reservations" :key=index>
+        <td style="text-align: center; width:30%">{{ r.restaurant }}</td>
+        <td style="text-align: center; width:30%">{{ r.dateResa }}</td>
+        <td style="text-align: center; width:25%">{{ r.heureResa }}</td>
+        </tr>
+        </tbody>
+      </v-table>
+    </div>
+
+
   </div>
 </template>
 
 <script>
 /// CHERCHE V-DATA Pour les info de la popup --> Info a mettre de le header, avant restaurant(data dans js)
-//import { gmapsMap, gmapsMarker } from 'x5-gmaps'
 
 export default {
-  //components: { gmapsMap, gmapsMarker },
   name: "ListeRestaurants",
   data: function () {
     return {
@@ -300,17 +316,44 @@ export default {
           grades: ""
         },
       ],
-      reservations: [
+      items: [
         {
           id: 1,
-          name: 'Mes réservations :',
+          name: "Applications :",
           children: [
-            { id: 2, name: 'Calendar : app' },
-            { id: 3, name: 'Chrome : app' },
-            { id: 4, name: 'Webstorm : app' },
-          ],
+            { id: 2, name: "Calendar : app" },
+            { id: 3, name: "Chrome : app" },
+            { id: 4, name: "Webstorm : app" }
+          ]
+        },
+        {
+          id: 5,
+          name: "Documents :",
+          children: [
+            {
+              id: 6,
+              name: "vuetify :",
+              children: [
+                {
+                  id: 7,
+                  name: "src :",
+                  restaurant: "",
+                  dateResa: "",
+                  heureResa: "",
+                  children: [
+                    {id: 8, name: "index : ts", restaurant: "resto", dateResa: "date", heureResa: "heure"},
+                  ]
+                }
+              ]
+            },
+          ]
         }
+        ],
+      reservations: [
+        {restaurant: "Nom resto", dateResa: "date", heureResa: "heure"},
       ],
+      nextId: 1000,
+
       nom: "",
       cuisine: "",
       total: "",
@@ -324,7 +367,8 @@ export default {
       supprimer: "",
       date: "",
       timezone: '',
-
+      picker: "",
+      currentRestaurant: "",
     };
   },
   mounted() {
@@ -334,6 +378,44 @@ export default {
     this.showMap(null);
   },
   methods: {
+    addChild(item) {
+      if (!item.children) {
+        this.$set(item, "children", []);
+      }
+
+      //const name = `${item.name} (${item.children.length})`;
+      const id = this.nextId++;
+
+      const restaurant = "le reso";
+      const dateResa = "la date";
+      const heureResa = "l'heure";
+      item.children.push({
+        id,
+        name,
+        restaurant,
+        dateResa,
+        heureResa
+      });
+    },
+
+    findItem(id, items = null) {
+      if (!items) {
+        items = this.items;
+      }
+      return items.reduce((acc, item) => {
+        if (acc) {
+          return acc;
+        }
+        if (item.id === id) {
+          return item;
+        }
+        if (item.children) {
+          return this.findItem(id, item.children);
+        }
+        return acc;
+      }, null);
+    },
+
     supprimerRestaurant(id) {
       fetch("http://localhost:8080/api/restaurants/" + id, { method: "DELETE" })
         .then((responseJS) => {
@@ -522,15 +604,21 @@ export default {
           console.log(err);
         });
     },
-    showMap(restaurant){
-      var coordX= restaurant.address.coord[0];
-      var coordY= restaurant.address.coord[1];
-      console.log(document.getElementById("restauMap"));
-      document.getElementById("restauMap").innerHTML=
-          "<iframe width=\"100%\" height=\"600\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q="+coordY+ "," + coordX+ "+(mapResatu)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed\"></iframe>\n"
-      document.getElementById("infoRestau").innerHTML=
-          "Adresse complète : \n"+ restaurant.address.street +", "+ restaurant.address.zipcode+", " + restaurant.borough;
+    showMap(restaurant) {
+      if (restaurant != null && document.getElementById("restauMap") != null) {
+        var coordX = restaurant.address.coord[0];
+        var coordY = restaurant.address.coord[1];
+        document.getElementById("restauMap").innerHTML =
+            "<iframe width=\"100%\" height=\"600\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=" + coordY + "," + coordX + "+(mapResatu)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed\"></iframe>\n"
+        document.getElementById("infoRestau").innerHTML =
+            "Adresse complète : \n" + restaurant.address.street + ", " + restaurant.address.zipcode + ", " + restaurant.borough;
+      }
+      this.currentRestaurant = restaurant.name
     },
+    reserver(){
+      this.dialog=false;
+      this.reservations.push({restaurant: this.currentRestaurant, dateResa: this.date, heureResa: this.picker});
+    }
   },
 };
 </script>
