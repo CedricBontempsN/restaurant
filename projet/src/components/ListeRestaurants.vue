@@ -186,7 +186,7 @@
               class="delete"
               id="modifImg"
               alt="Modifier restaurant"
-              v-on:click="updRestaurant(r._id)"
+              v-on:click="updRestaurant(r)"
             >
               fa-redo</v-icon
             >
@@ -230,7 +230,7 @@
               </v-text-field>
             </v-col>
             <v-col>
-              <v-btn
+              <v-btn type="sumbit"
                 >Modifier<v-icon style="margin-left: 5px">
                   fab fa-jedi-order
                 </v-icon></v-btn
@@ -240,7 +240,7 @@
         </form>
       </v-container>
     </div>
-      <v-dialog v-model="dialog" width="70%">
+      <v-dialog v-model="dialog" width="80%">
         <v-card>
           <v-card-title  class="headline grey lighten-2">
             Details du resaturant
@@ -275,11 +275,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-
-    
-
-
   </div>
 </template>
 
@@ -570,10 +565,11 @@ export default {
         });
     },
     updRestaurant(r) {
+      console.log("ouiiiiii");
       this.oldName = r.name;
       this.oldCuisine = r.cuisine;
       this.oldId = r._id;
-      console.log("OLD name..." + this.oldName + "CUISIE..." + this.oldCuisine);
+      console.log("OLD name..." + this.oldName + "CUISIE..." + this.oldCuisine + "ID ... " + this.oldId);
       document.getElementById("formModif").className = "modifView";
     },
     changerRestaurant(event) {
