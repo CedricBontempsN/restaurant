@@ -86,12 +86,13 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-container style="width:100%\">
     <div id="resa">
-      <v-table text-align="center" >
+      <v-table style="width:100%" text-align="center" >
         <tr>
-          <th>Restaurants</th>
-          <th>Date</th>
-          <th>Heure</th>
+          <th style="text-align: center; width:30%">Restaurants</th>
+          <th style="text-align: center; width:30%">Date</th>
+          <th style="text-align: center; width:30%">Heure</th>
         </tr>
         <tbody>
         <tr v-for="(r, index) in reservations" :key=index>
@@ -102,6 +103,7 @@
         </tbody>
       </v-table>
     </div>
+    </v-container>
     <!-- 
     <template>
       <v-card>
@@ -184,7 +186,7 @@
               class="delete"
               id="modifImg"
               alt="Modifier restaurant"
-              v-on:click="updRestaurant(index)"
+              v-on:click="updRestaurant(r._id)"
             >
               fa-redo</v-icon
             >
@@ -282,7 +284,6 @@
 </template>
 
 <script>
-/// CHERCHE V-DATA Pour les info de la popup --> Info a mettre de le header, avant restaurant(data dans js)
 
 export default {
   name: "ListeRestaurants",
@@ -383,7 +384,7 @@ export default {
         this.$set(item, "children", []);
       }
 
-      //const name = `${item.name} (${item.children.length})`;
+
       const id = this.nextId++;
 
       const restaurant = "le reso";
@@ -495,9 +496,6 @@ export default {
         .catch(function (err) {
           console.log(err);
         });
-    },
-    getColor(index) {
-      return index % 2 ? "lightBlue" : "pink";
     },
     getRestaurantsFromServer() {
       fetch(" http://localhost:8080/api/restaurants")
