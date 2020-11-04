@@ -131,19 +131,6 @@ app.get('/api/restaurants/:id', function(req, res) {
  
 });
 
-// Récupération d'un seul restaurant par son id
-app.get('/api/restaurants/:name', function(req, res) {
-	var name = req.params.name;
-	let page = parseInt(req.query.page || 1);
-	let pagesize = parseInt(req.query.pageSize || 1);
-
-	mongoDBModule.findRestaurants(page, pagesize, name, function (data) {
-		res.send(JSON.stringify(data));
-	})
-
-});
-
-
 // Creation d'un restaurant par envoi d'un formulaire
 // On fera l'insert par un POST, c'est le standard REST
 app.post('/api/restaurants', multerData.fields([]), function(req, res) {
