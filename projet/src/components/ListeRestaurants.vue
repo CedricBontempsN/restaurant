@@ -86,7 +86,22 @@
         </v-col>
       </v-row>
     </v-container>
-
+    <div id="resa">
+      <v-table text-align="center" >
+        <tr>
+          <th>Restaurants</th>
+          <th>Date</th>
+          <th>Heure</th>
+        </tr>
+        <tbody>
+        <tr v-for="(r, index) in reservations" :key=index>
+        <td style="text-align: center; width:30%">{{ r.restaurant }}</td>
+        <td style="text-align: center; width:30%">{{ r.dateResa }}</td>
+        <td style="text-align: center; width:30%">{{ r.heureResa }}</td>
+        </tr>
+        </tbody>
+      </v-table>
+    </div>
     <!-- 
     <template>
       <v-card>
@@ -260,22 +275,7 @@
       </v-dialog>
 
 
-    <div id="resa">
-      <v-table text-align="center" >
-        <tr>
-          <th>Restaurants</th>
-          <th>Date</th>
-          <th>Heure</th>
-        </tr>
-        <tbody>
-        <tr v-for="(r, index) in reservations" :key=index>
-        <td style="text-align: center; width:30%">{{ r.restaurant }}</td>
-        <td style="text-align: center; width:30%">{{ r.dateResa }}</td>
-        <td style="text-align: center; width:25%">{{ r.heureResa }}</td>
-        </tr>
-        </tbody>
-      </v-table>
-    </div>
+    
 
 
   </div>
@@ -375,7 +375,7 @@ export default {
     console.log("Before HTML");
     this.getRestaurantsFromServer();
     this.getRestaurantsNb();
-    this.showMap(null);
+    this.showMap();
   },
   methods: {
     addChild(item) {
@@ -609,7 +609,7 @@ export default {
         var coordX = restaurant.address.coord[0];
         var coordY = restaurant.address.coord[1];
         document.getElementById("restauMap").innerHTML =
-            "<iframe width=\"100%\" height=\"600\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=" + coordY + "," + coordX + "+(mapResatu)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed\"></iframe>\n"
+            "<iframe width=\"100%\" height=\"400\" frameborder=\"0\" style=\"border:0\" src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyDVhNJO7h-3Sd5n9DNHMjQMWCxa4Is_684&q="+coordY+","+coordX+"&maptype=satellite\" allowfullscreen></iframe>" //+ coordY + "," + coordX + "&maptype=satellite+(mapResatu)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed\"></iframe>\n"
         document.getElementById("infoRestau").innerHTML =
             "Adresse complète : \n" + restaurant.address.street + ", " + restaurant.address.zipcode + ", " + restaurant.borough;
       }
