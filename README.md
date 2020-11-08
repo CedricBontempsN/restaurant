@@ -24,3 +24,5 @@ Au fur et à mesure du projet, les majeurs problèmes que nous avons rencontrés
 Notre application web dispose donc de chacune des fonctionnalités de base demandée tel que l'ajout, la modification ou la suppression de restaurant. <br>
 De plus notre vue de détail affiche la map permettant de se rendre à ce restaurant, cependant, celle-ci ne s'affiche directement, nous devons nous rendre au moins une fois dans la vue de détails pour que les fois suivantes la carte s'affiche correctement. <br>
 Enfin dans un système de réservation a été mis en place, dans la vue de détail nous pouvons sélectionner une date et une heure pour réserver une table à un restaurant.
+## Lien de la video
+https://youtu.be/6QRoalrcH9w
